@@ -1,0 +1,36 @@
+name: 'Hetzner Cloud Self-Hosted Runner fot GitHub CI'
+description: 'Automatically start cloud instances in the Hetzner Cloud as self-hosted runners for GitHub repositories.'
+inputs:
+  hetzner-api-key:
+    description: 'API key for the Hetzner Cloud'
+    required: true
+  hetzner-instance-type:
+    description: 'Name of Hetzner instance type to be created e.g. CX11'
+    required: true
+  hetzner-location:
+    description: 'Location ID where cloud instance should be created'
+    default: 'fsn1'
+  hetzner-name-prefix:
+    description: 'Prefix for random generated server names'
+    default: 'github-ci-runner'
+  github-api-key:
+    description: 'GitHub API key that is needed to register a new self-hosted runner'
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Generate GitHub runner token
+      id: create-github-runner-token
+      run: echo "github_runner_token=$(${{ github.action_path }}/create-github-runner-token.sh ${{ github.repository }} ${{ inputs.github-api-key }})" >> $GITHUB_OUTPUT
+      shell: bash
+    - run: echo "${{ steps.create-github-runner-token.outputs.github_runner_token }}"
+      shell: bash
+    - id: cloud-init-yml
+      run: echo "filename=${{ runner.temp }}/hetzner-ci-cloud-init.yml" >> $GITHUB_OUTPUT
+      shell: bash
+    - name: Generate cloud-init.yml
+      run: ${{ github.action_path }}/prepare-cloud-init.sh "${{ github.server_url }}/${{ github.repository }}" ${{ steps.create-github-runner-token.outputs.github_runner_token }} > ${{ steps.cloud-init-yml.outputs.filename }}
+      shell: bash
+    - name: Create instance in the Hetzner Cloud
+      run: ${{ github.action_path }}/create-hetzner-instance.sh ${{ inputs.hetzner-api-key }} ${{ inputs.hetzner-instance-type }} ${{ inputs.hetzner-location }} ${{ inputs.hetzner-name-prefix }} "${{ steps.cloud-init-yml.outputs.filename }}"
+      shell: bash
