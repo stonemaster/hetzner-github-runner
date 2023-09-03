@@ -8,6 +8,30 @@ after the GitHub CI run.
 
 ## Usage
 
+1. Bootstrap your CI job to create a new hetzner instance:
+
+```yaml
+    [...]
+      - id: hetzner-test
+        uses: stonemaster/hetzner-github-runner@HEAD
+        with:
+          github-api-key: ${{ secrets.GH_API_KEY }}
+          hetzner-api-key: ${{ secrets.HETZNER_API_KEY }}
+          hetzner-instance-type: CX11
+
+    [...]
+```
+
+2. After this step another workflow can run on this self-hosted machine:
+
+```yaml
+[...]
+jobs:
+ release_build:
+     runs-on: self-hosted
+[...]
+```
+
 ## Security & Required Keys
 
 **Never put the tokens into clear-text but use the Repository
