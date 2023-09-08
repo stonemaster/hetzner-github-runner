@@ -11,7 +11,9 @@ export GITHUB_REPO_URL=${1}
 export RUNNER_TOKEN=${2}
 
 export PRE_JOB_SCRIPT=$(echo 'echo Hetzner runner has been started.' | base64)
-export POST_JOB_SCRIPT=$(echo 'killall config.sh' | base64)
+# GitHub Actions internal binary name, is killed after job execution
+export POST_JOB_SCRIPT=$(echo 'killall Runner.Listener' | base64)
+#!TODO
 export SHUTDOWN_RUNNER_SCRIPT=$(echo 'echo Bye world' | base64)
 
 template_file=$(dirname $0)/cloud-init.yml.tmpl
