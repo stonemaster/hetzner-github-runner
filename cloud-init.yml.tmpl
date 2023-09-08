@@ -15,6 +15,9 @@ write_files:
           environment:
             - GITHUB_REPO_URL=$GITHUB_REPO_URL
             - RUNNER_TOKEN=$RUNNER_TOKEN
+            - PRE_JOB_SCRIPT=$PRE_JOB_SCRIPT
+            - POST_JOB_SCRIPT=$POST_JOB_SCRIPT
+            - SHUTDOWN_RUNNER_SCRIPT=$SHUTDOWN_RUNNER_SCRIPT
 
 runcmd:
   - apt-get update

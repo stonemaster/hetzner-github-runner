@@ -22,7 +22,6 @@ json=$(jq -n --arg location ${location} \
   -f ${template_file})
 
 curl \
-  -v \
   -X POST \
   --fail-with-body \
   -H "Authorization: Bearer ${hetzner_api_key}" \

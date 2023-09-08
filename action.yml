@@ -23,8 +23,6 @@ runs:
       id: create-github-runner-token
       run: echo "github_runner_token=$(${{ github.action_path }}/create-github-runner-token.sh ${{ github.repository }} ${{ inputs.github-api-key }})" >> $GITHUB_OUTPUT
       shell: bash
-    - run: echo "${{ steps.create-github-runner-token.outputs.github_runner_token }}"
-      shell: bash
     - id: cloud-init-yml
       run: echo "filename=${{ runner.temp }}/hetzner-ci-cloud-init.yml" >> $GITHUB_OUTPUT
       shell: bash
