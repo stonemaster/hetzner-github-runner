@@ -27,5 +27,5 @@ curl \
   -H "Authorization: Bearer ${hetzner_api_key}" \
   -H "Content-Type: application/json" \
   -d "${json}" \
- 'https://api.hetzner.cloud/v1/servers'
+ 'https://api.hetzner.cloud/v1/servers' >/dev/null
 
