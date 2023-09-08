@@ -24,6 +24,7 @@ json=$(jq -n --arg location ${location} \
 curl \
   -v \
   -X POST \
+  --fail-with-body \
   -H "Authorization: Bearer ${hetzner_api_key}" \
   -H "Content-Type: application/json" \
   -d "${json}" \
