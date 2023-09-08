@@ -11,25 +11,31 @@ after the GitHub CI run.
 1. Bootstrap your CI job to create a new hetzner instance:
 
 ```yaml
-    [...]
-      - id: hetzner-test
-        uses: stonemaster/hetzner-github-runner@HEAD
+jobs:
+  prepare_env:
+    runs-on: ubuntu-latest
+    name: Checkout Hetzner Cloud CI Action
+    steps:
+      - uses: actions/checkout@v3
+      - uses: stonemaster/hetzner-github-runner@HEAD
         with:
           github-api-key: ${{ secrets.GH_API_KEY }}
           hetzner-api-key: ${{ secrets.HETZNER_API_KEY }}
-          hetzner-instance-type: CX11
-
-    [...]
+          hetzner-instance-type: cx11
 ```
 
-2. After this step another workflow can run on this self-hosted machine:
+2. After this step another workflow can run on this self-hosted machine. Note
+   that this job depends on `prepare_env`:
 
 ```yaml
-[...]
 jobs:
- release_build:
-     runs-on: self-hosted
-[...]
+  [...]
+  actual_build:
+    runs-on: self-hosted
+    needs: prepare_env
+    steps:
+      - run: env
+        shell: bash
 ```
 
 ## Security & Required Keys

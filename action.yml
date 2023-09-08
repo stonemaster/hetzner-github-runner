@@ -5,7 +5,7 @@ inputs:
     description: 'API key for the Hetzner Cloud'
     required: true
   hetzner-instance-type:
-    description: 'Name of Hetzner instance type to be created e.g. CX11'
+    description: 'Name of Hetzner instance type to be created e.g. cx11. See https://docs.hetzner.cloud/#server-types-get-all-server-types'
     required: true
   hetzner-location:
     description: 'Location ID where cloud instance should be created'
