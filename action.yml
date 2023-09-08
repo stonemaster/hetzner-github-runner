@@ -27,8 +27,11 @@ runs:
       run: echo "filename=${{ runner.temp }}/hetzner-ci-cloud-init.yml" >> $GITHUB_OUTPUT
       shell: bash
     - name: Generate cloud-init.yml
-      run: ${{ github.action_path }}/prepare-cloud-init.sh "${{ github.server_url }}/${{ github.repository }}" ${{ steps.create-github-runner-token.outputs.github_runner_token }} > ${{ steps.cloud-init-yml.outputs.filename }}
+      run: ${{ github.action_path }}/prepare-cloud-init.sh "${{ github.server_url }}/${{ github.repository }}" ${{ steps.create-github-runner-token.outputs.github_runner_token }} ${{ inputs.hetzner-api-key }} > ${{ steps.cloud-init-yml.outputs.filename }}
       shell: bash
     - name: Create instance in the Hetzner Cloud
       run: ${{ github.action_path }}/create-hetzner-instance.sh ${{ inputs.hetzner-api-key }} ${{ inputs.hetzner-instance-type }} ${{ inputs.hetzner-location }} ${{ inputs.hetzner-name-prefix }} "${{ steps.cloud-init-yml.outputs.filename }}"
+      shell: bash
+    - name: Cleanup
+      run: rm ${{ steps.cloud-init-yml.outputs.filename }}
       shell: bash
