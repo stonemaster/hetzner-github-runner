@@ -1,5 +1,3 @@
-_This project is WIP_
-
 # GitHub Action for Hetzner Cloud Self-Hosted Runners
 
 Automatically start cloud instances in the Hetzner Cloud as self-hosted runners
@@ -14,9 +12,8 @@ after the GitHub CI run.
 jobs:
   prepare_env:
     runs-on: ubuntu-latest
-    name: Checkout Hetzner Cloud CI Action
+    name: Create new Hetzner Cloud instance for build
     steps:
-      - uses: actions/checkout@v3
       - uses: stonemaster/hetzner-github-runner@HEAD
         with:
           github-api-key: ${{ secrets.GH_API_KEY }}
