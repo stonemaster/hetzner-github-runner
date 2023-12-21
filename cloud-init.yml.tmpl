@@ -1,11 +1,9 @@
 #cloud-config
-
 runcmd:
-- apt-get update
-- apt-get install -y docker.io docker-compose
-- docker-compose -f /run/docker-compose.yml up -d
-
+  - apt-get update
+  - apt-get install -y docker.io docker-compose
+  - docker-compose -f /run/docker-compose.yml up -d
 write_files:
-- path: /run/docker-compose.yml
-  encoding: b64
-  content: $DOCKER_COMPOSE_YML
+  - path: /run/docker-compose.yml
+    encoding: b64
+    content: $DOCKER_COMPOSE_YML
