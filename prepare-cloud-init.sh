@@ -18,6 +18,10 @@ export POST_JOB_SCRIPT=$(cat $(dirname $0)/post-job-script.sh | base64 -w0)
 # and removed the Hetzner cloud instance.
 export SHUTDOWN_RUNNER_SCRIPT=$(sed "s/hetzner_key=/hetzner_key=${HETZNER_API_KEY}/" $(dirname $0)/delete-me.sh | base64 -w0)
 
+docker_compose_template=$(dirname $0)/docker-compose.yml.tmpl
+
+export DOCKER_COMPOSE_YML=$(envsubst < ${docker_compose_template} | base64 -w 0)
+
 template_file=$(dirname $0)/cloud-init.yml.tmpl
 
 envsubst < ${template_file}

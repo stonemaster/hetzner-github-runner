@@ -1,21 +1,11 @@
 #cloud-config
 
 write_files:
-- path: /docker-compose.yml
-  content: |
-    version: '3.6'
-
-    services:
-      github-runner:
-        image: ghcr.io/stonemaster/github-actions-runner:main
-        container_name: githubrunner
-        restart: always
-        environment:
-          - GITHUB_REPO_URL=$GITHUB_REPO_URL
-          - RUNNER_TOKEN=$RUNNER_TOKEN
-          - PRE_JOB_SCRIPT=$PRE_JOB_SCRIPT
-          - POST_JOB_SCRIPT=$POST_JOB_SCRIPT
-          - SHUTDOWN_RUNNER_SCRIPT=$SHUTDOWN_RUNNER_SCRIPT
+- owner: root:root
+  path: /docker-compose.yml
+  permissions: '0600'
+  encoding: b64
+  content: $DOCKER_COMPOSE_YML
 
 runcmd:
 - apt-get update
