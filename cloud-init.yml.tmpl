@@ -1,8 +1,8 @@
 #cloud-config
 
 write_files:
-- owner: "root:root"
-  path: /root/docker-compose.yml
+- owner: root:root
+  path: /docker-compose.yml
   permissions: '0600'
   content: |
     version: '3.6'
@@ -22,4 +22,4 @@ write_files:
 runcmd:
 - apt-get update
 - apt-get install -y docker.io docker-compose
-- docker-compose -f /root/docker-compose.yml up -d
+- docker-compose -f /docker-compose.yml up -d
