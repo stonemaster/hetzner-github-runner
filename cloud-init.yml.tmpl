@@ -1,9 +1,7 @@
 #cloud-config
 
 write_files:
-- owner: root:root
-  path: /docker-compose.yml
-  permissions: '0600'
+- path: /docker-compose.yml
   content: |
     version: '3.6'
 
