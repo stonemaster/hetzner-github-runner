@@ -10,6 +10,9 @@ inputs:
   hetzner-location:
     description: 'Location ID where cloud instance should be created'
     default: 'fsn1'
+  hetzner-ssh-key-id:
+    description: If set deploys this SSH key ID to the server for debugging purposes
+    required: false
   hetzner-name-prefix:
     description: 'Prefix for random generated server names'
     default: 'github-ci-runner'
@@ -30,7 +33,7 @@ runs:
       run: ${{ github.action_path }}/prepare-cloud-init.sh "${{ github.server_url }}/${{ github.repository }}" ${{ steps.create-github-runner-token.outputs.github_runner_token }} ${{ inputs.hetzner-api-key }} > ${{ steps.cloud-init-yml.outputs.filename }}
       shell: bash
     - name: Create instance in the Hetzner Cloud
-      run: ${{ github.action_path }}/create-hetzner-instance.sh ${{ inputs.hetzner-api-key }} ${{ inputs.hetzner-instance-type }} ${{ inputs.hetzner-location }} ${{ inputs.hetzner-name-prefix }} "${{ steps.cloud-init-yml.outputs.filename }}"
+      run: ${{ github.action_path }}/create-hetzner-instance.sh ${{ inputs.hetzner-api-key }} ${{ inputs.hetzner-instance-type }} ${{ inputs.hetzner-location }} ${{ inputs.hetzner-name-prefix }} "${{ steps.cloud-init-yml.outputs.filename }}" ${{ inputs.hetzner-ssh-key-id}}
       shell: bash
     - name: Cleanup
       run: rm ${{ steps.cloud-init-yml.outputs.filename }}
