@@ -1,9 +1,8 @@
 #cloud-config
-
 write_files:
-- encoding: base64
-  content: $DOCKER_COMPOSE_YML
-  path: /docker-compose.yml
+  - path: /docker-compose.yml
+    encoding: base64
+    content: $DOCKER_COMPOSE_YML
 
 runcmd:
 - apt-get update
