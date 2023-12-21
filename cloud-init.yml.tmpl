@@ -1,11 +1,9 @@
 #cloud-config
 
 write_files:
-- owner: root:root
-  path: /docker-compose.yml
-  permissions: '0600'
-  encoding: b64
+- encoding: base64
   content: $DOCKER_COMPOSE_YML
+  path: /docker-compose.yml
 
 runcmd:
 - apt-get update
