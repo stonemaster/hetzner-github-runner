@@ -2,8 +2,8 @@
 
 set -eu -o pipefail
 
-if [[ $# != 3 ]]; then
-  echo "usage: $(basename $0) GITHUB_REPO_URL RUNNER_TOKEN HETZNER_API_KEY"
+if [[ $# -lt 3 ]]; then
+  echo "usage: $(basename $0) GITHUB_REPO_URL RUNNER_TOKEN HETZNER_API_KEY [OUTPUT_FILE]"
   exit 1
 fi
 
@@ -24,4 +24,8 @@ export DOCKER_COMPOSE_YML=$(envsubst < ${docker_compose_template} | base64 -w 0)
 
 template_file=$(dirname $0)/cloud-init.yml.tmpl
 
-envsubst < ${template_file}
+if [[ $# == 3 ]]; then
+  envsubst < "${template_file}"
+else
+  envsubst < "${template_file}" > "${4}"
+fi
