@@ -2,7 +2,7 @@
 
 set -eu -o pipefail
 
-if [[ $# < 5 ]]; then
+if [[ $# -lt 5 ]]; then
   echo "usage: $(basename $0) HETZNER_API_KEY INSTANCE_TYPE LOCATION_TYPE NAME_PREFIX CLOUD_INIT_YML_FILE [SSH_KEY_ID]"
   exit 1
 fi
