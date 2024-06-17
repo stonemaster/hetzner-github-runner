@@ -27,7 +27,7 @@ runs:
       run: echo "github_runner_token=$(${{ github.action_path }}/create-github-runner-token.sh ${{ github.repository }} ${{ inputs.github-api-key }})" >> $GITHUB_OUTPUT
       shell: bash
     - name: Make sure that temp is created
-      run: mkdir ${{ runner.temp }}
+      run: mkdir -p ${{ runner.temp }}
       shell: bash
     - name: Generate cloud-init.yml
       run: ${{ github.action_path }}/prepare-cloud-init.sh "${{ github.server_url }}/${{ github.repository }}" ${{ steps.create-github-runner-token.outputs.github_runner_token }} ${{ inputs.hetzner-api-key }} ${{ runner.temp }}/hetzner-ci-cloud-init.yml
