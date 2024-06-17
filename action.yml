@@ -26,15 +26,12 @@ runs:
       id: create-github-runner-token
       run: echo "github_runner_token=$(${{ github.action_path }}/create-github-runner-token.sh ${{ github.repository }} ${{ inputs.github-api-key }})" >> $GITHUB_OUTPUT
       shell: bash
-    - id: cloud-init-yml
-      run: echo "filename=${{ runner.temp }}/hetzner-ci-cloud-init.yml" >> $GITHUB_OUTPUT
-      shell: bash
     - name: Generate cloud-init.yml
-      run: ${{ github.action_path }}/prepare-cloud-init.sh "${{ github.server_url }}/${{ github.repository }}" ${{ steps.create-github-runner-token.outputs.github_runner_token }} ${{ inputs.hetzner-api-key }} "${{ steps.cloud-init-yml.outputs.filename }}"
+      run: ${{ github.action_path }}/prepare-cloud-init.sh "${{ github.server_url }}/${{ github.repository }}" ${{ steps.create-github-runner-token.outputs.github_runner_token }} ${{ inputs.hetzner-api-key }} ${{ runner.temp }}/hetzner-ci-cloud-init.yml
       shell: bash
     - name: Create instance in the Hetzner Cloud
-      run: ${{ github.action_path }}/create-hetzner-instance.sh ${{ inputs.hetzner-api-key }} ${{ inputs.hetzner-instance-type }} ${{ inputs.hetzner-location }} ${{ inputs.hetzner-name-prefix }} "${{ steps.cloud-init-yml.outputs.filename }}" ${{ inputs.hetzner-ssh-key-id}}
+      run: ${{ github.action_path }}/create-hetzner-instance.sh ${{ inputs.hetzner-api-key }} ${{ inputs.hetzner-instance-type }} ${{ inputs.hetzner-location }} ${{ inputs.hetzner-name-prefix }} ${{ runner.temp }}/hetzner-ci-cloud-init.yml ${{ inputs.hetzner-ssh-key-id}}
       shell: bash
     - name: Cleanup
-      run: rm ${{ steps.cloud-init-yml.outputs.filename }}
+      run: rm ${{ runner.temp }}/hetzner-ci-cloud-init.yml
       shell: bash
