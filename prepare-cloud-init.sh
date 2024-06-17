@@ -27,5 +27,6 @@ template_file=$(dirname $0)/cloud-init.yml.tmpl
 if [[ $# == 3 ]]; then
   envsubst < "${template_file}"
 else
+  touch "${4}"
   envsubst < "${template_file}" > "${4}"
 fi
