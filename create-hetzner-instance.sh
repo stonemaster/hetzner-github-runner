@@ -17,7 +17,7 @@ ssh_key_id=${6:-}
 template_file=$(dirname $0)/hetzner-server-create-template.jq
 
 temp_json=$(mktemp)
-jq -n --arg location ${location} \
+jq -n \
   --arg server_type ${instance_type} \
   --arg name "$name_prefix-$RANDOM" \
   --rawfile cloud_init_yml $cloud_init_yml_file \
@@ -29,6 +29,12 @@ if [ "$ssh_key_id" != "" ]; then
   mv $temp_json2 $temp_json
 fi
 
+if [ "$location" != "auto" ]; then
+  temp_json2=$(mktemp)
+  cat $temp_json | jq ".location = \"$location\"" > $temp_json2
+  mv $temp_json2 $temp_json
+fi
+
 curl \
   -X POST \
   --fail-with-body \
@@ -36,4 +42,3 @@ curl \
   -H "Content-Type: application/json" \
   -d @$temp_json \
  'https://api.hetzner.cloud/v1/servers'
-

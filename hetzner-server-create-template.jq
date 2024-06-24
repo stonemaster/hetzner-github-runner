@@ -1,6 +1,5 @@
 {
   image: "ubuntu-22.04",
-  location: $location,
   server_type: $server_type,
   name: $name,
   public_net: {

@@ -8,8 +8,8 @@ inputs:
     description: 'Name of Hetzner instance type to be created e.g. cx11. See https://docs.hetzner.cloud/#server-types-get-all-server-types'
     required: true
   hetzner-location:
-    description: 'Location ID where cloud instance should be created'
-    default: 'fsn1'
+    description: 'Location ID where cloud instance should be created. In case of `auto` the Hetzner API will decide'
+    default: 'auto'
   hetzner-ssh-key-id:
     description: If set deploys this SSH key ID to the server for debugging purposes
     required: false
