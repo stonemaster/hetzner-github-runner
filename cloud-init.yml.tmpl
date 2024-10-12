@@ -2,6 +2,7 @@
 runcmd:
 - apt-get update
 - apt-get install -y docker.io docker-compose
+- chown 666 /var/run/docker.sock
 - docker-compose -f /run/docker-compose.yml up -d
 write_files:
 - path: /run/docker-compose.yml
