@@ -4,7 +4,7 @@ services:
   github-runner:
     image: ghcr.io/stonemaster/github-actions-runner:main
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/run/docker.sock:/var/run/docker.sock:rw
     container_name: githubrunner
     restart: always
     environment:
