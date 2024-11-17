@@ -3,6 +3,7 @@ version: '3.6'
 services:
   github-runner:
     image: ghcr.io/stonemaster/github-actions-runner:main
+    network_mode: "host"
     container_name: githubrunner
     restart: always
     environment:
@@ -11,3 +12,4 @@ services:
       - PRE_JOB_SCRIPT=$PRE_JOB_SCRIPT
       - POST_JOB_SCRIPT=$POST_JOB_SCRIPT
       - SHUTDOWN_RUNNER_SCRIPT=$SHUTDOWN_RUNNER_SCRIPT
+      - DOCKER_HOST=tcp://127.0.0.1:2375
