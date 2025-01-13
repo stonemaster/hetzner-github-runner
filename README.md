@@ -1,3 +1,10 @@
+**This action has been deprecated and archived. The author recommends
+to use the much better and feature-rich Github action
+[hcloud-github-runner](https://github.com/Cyclenerd/hcloud-github-runner). The
+current version tag will of course continue to work. 
+The Docker container that this action [is based on](https://github.com/stonemaster/github-actions-runner) remains
+unaffected.**
+
 # GitHub Action for Hetzner Cloud Self-Hosted Runners
 
 Automatically start cloud instances in the Hetzner Cloud as self-hosted runners
